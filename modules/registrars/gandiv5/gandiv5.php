@@ -883,18 +883,25 @@ function gandiv5_TransferSync($params)
         }
         if ($request->code != 404) {
             $expired = (strtotime($request->dates->registry_ends_at) < time())?true:false;
-            return array(
-                'expirydate' => date("Y-m-d", strtotime($request->dates->registry_ends_at)),
-                'completed' => true, // Return true if the transfer is completed
-                'failed' => false,
-                'reason' => '',
-                'error' => ''
-            );
+            if (date("Y-m-d", strtotime($request->dates->registry_ends_at)) != '1970-01-01') {
+                return array(
+                    'expirydate' => date("Y-m-d", strtotime($request->dates->registry_ends_at)),
+                    'completed' => true, // Return true if the transfer is completed
+                    'failed' => false,
+                    'reason' => '',
+                    'error' => ''
+                );
+            } else {
+                return array(
+                    'completed' => false,
+                    'failed' => false
+                );
+            }
         }
     } catch (\Exception $e) {
         return array(
             'failed' => true,
-            'completed' => false,
+            'completed' => false, // Return true if the transfer is completed
             'reason' => 'Transfer Error',
             'error' => $e->getMessage()
         );

@@ -337,7 +337,7 @@ class ApiClient
                  "authorization: Apikey {$this->apiKey}",
                  "content-type: application/json"
              ),
-             CURLOPT_USERAGENT => 'WHMCS/1.4'
+             CURLOPT_USERAGENT => 'WHMCS/Hodi/1.4.2'
          ));
         if ($method == "POST") {
             curl_setopt_array($curl, [ CURLOPT_CUSTOMREQUEST => "POST"]);
